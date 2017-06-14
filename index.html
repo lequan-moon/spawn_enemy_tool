@@ -1,0 +1,83 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Racing2D Scene tool</title>
+  <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <script src="components/jquery/dist/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.4.0.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+  <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="components/angular/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+  <script src="https://rawgit.com/eligrey/FileSaver.js/master/FileSaver.js"></script>
+</head>
+
+<body>
+  <h1>
+    RACING 2D LEVEL DESIGN TOOL
+  </h1>
+  <div id="wavesContainer" ng-app="myApp" ng-controller="myCtrl">
+    <div class="col-md-12">
+      <div id="drop_zone" class="col-md-6">Drop files here to load data</div>  
+    </div>
+    <table style="width:auto;margin:20px" class="table table-bordered">
+        <thead>
+            <tr>
+              <th>Wave</th>
+              <th>Matrix</th>
+              <th>Time Distance</th>
+              <th></th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody ui:sortable ng:model="list">
+            <tr ng:repeat="item in list" class="item" style="cursor: move;">
+                <td style="vertical-align:inherit">{{$index}}</td>
+                <td>
+                  <table class="table-bordered">
+                    <tbody>
+                      <tr ng:repeat="enemy in item.enemies">
+                        <td>
+                          <select ng-model="enemy.enemy_type" ng-options="eType for eType in listEnemies"></select>
+                          <label style="margin-left: 100px;">X :</label><select class="position_x" ng-model="enemy.position_x" ng-options="posX for posX in listPosX"></select>
+                          <label>Y :</label><select class="position_y" ng-model="enemy.position_y" ng-options="posY for posY in listPosY"></select>
+                          <Button class="btn btn-default btn-danger" ng-click="deleteEnemy(item, enemy)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                          </Button>
+                        </td>
+                      </tr>
+                      <tr><td><button class="btn btn-default btn-primary col-md-12" ng-click="addEnemy(item)">Add enemy</button></td></tr>
+                      </tbody>
+                  </table>
+                </td>
+                <td style="vertical-align:inherit"><input type="text" ng-model="item.time_distance"/><label>second(s)</label></td>
+                <td style="vertical-align:inherit">
+                  <table class="table-bordered">
+                    <tbody>
+                      <tr ng:repeat="posY in listPosY">
+                        <td ng:repeat="posX in listPosX" class="enemy_cell">
+                          <div>
+                            <div ng-repeat="enemy in item.enemies"
+                                  ng-if="(enemy.position_x == posX && enemy.position_y == posY)" 
+                                  class="enemy_cell {{enemy.enemy_type.indexOf('enemy') != -1 ? 'red' : 'yellow'}}"></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="vertical-align:inherit"><button class="btn btn-default btn-danger" ng-click="deleteWave(item)">Delete wave</button></td>
+          </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-default btn-primary" ng-click="addWave()">Add wave</button>
+    <button class="btn btn-default btn-success" ng-click="export()">DONE</button>
+  </div>
+
+  <script src="js/racing_2d_tool.js"></script>
+</body>
+</html>
