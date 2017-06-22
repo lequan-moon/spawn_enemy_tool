@@ -2,12 +2,12 @@
     var app = angular.module("myApp", ['ui']);
     app.controller("myCtrl", function($scope) {
       $scope.listEnemies = ["enemy_1","enemy_2","enemy_3","item_1","item_2","item_3"];
-      $scope.listPosX = [0,1,2,3,4,5];
-      $scope.listPosY = [0,1,2];
-      $scope.list = [{id:1, enemies:[{enemy_type:"enemy_1", position_x:0, position_y:0}] , time_distance:'0'}];
+      $scope.listPosX = [-1, -0.5, 0, 0.5, 1];
+      $scope.listPosY = [6, 5, 4];
+      $scope.list = [{id:1, enemies:[{enemy_type:"enemy_1", position_x:0, position_y:6}] , time_distance:'3'}];
       
       $scope.addWave = function(){
-        $scope.list.unshift({id:$scope.list.length + 1, enemies:[{enemy_type:"enemy_1", position_x:0, position_y:0}], time_distance:0});
+        $scope.list.unshift({id:$scope.list.length + 1, enemies:[{enemy_type:"enemy_1", position_x:0, position_y:6}], time_distance:3});
       }
       
       $scope.deleteWave = function(item) {
@@ -16,7 +16,7 @@
       }
       
       $scope.addEnemy = function(item){
-        item.enemies.push({enemy_type:"enemy_1", position_x:0, position_y:0})
+        item.enemies.push({enemy_type:"enemy_1", position_x:0, position_y:6})
       }
       
       $scope.deleteEnemy = function(item, enemy){
